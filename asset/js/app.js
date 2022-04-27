@@ -4,7 +4,7 @@ let blogs ;
 
 
 const getData = async e =>{
-    const {data} = await axios()
+    const {data} = await axios("GET",url)
     blogs = data
     console.log(blogs);
     display()
@@ -24,4 +24,20 @@ str+=`</ul>`
 document.querySelector("#output").innerHTML=str
 }
 
-const getSingleBlog = id => alert(id)
+const getSingleBlog =async id => {
+    document
+        .querySelector("#detailCard")
+        .innerHTML = `<div class="spinner-border"></div>`
+
+    const {data} = await axios("GET", `${url}/${id}`) 
+    console.warn(data.title , data.desc);   
+
+    document
+        .querySelector("#detailCard")
+        .innerHTML = `
+        <div class="card">
+            <div class="card-header">${data.title }</div>
+            <div class="card-body">${data.desc }</div>
+        </div>
+        `
+}
